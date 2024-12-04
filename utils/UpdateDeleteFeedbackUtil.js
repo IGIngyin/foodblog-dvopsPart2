@@ -1,5 +1,6 @@
 const fs = require("fs").promises;
 const path = require("path");
+
 const dataFilePath = path.join(__dirname, "foodblogs.json");
 
 async function ensureFileExists() {
@@ -10,32 +11,27 @@ async function ensureFileExists() {
     }
 }
 
-// Read JSON data
-async function readJSON(filename) {
-    const data = await fs.readFile(filename, "utf8");
+async function readJSON() {
+    const data = await fs.readFile(dataFilePath, "utf8");
     return JSON.parse(data);
 }
 
-// Write JSON data
-async function writeJSON(data, filename) {
-    await fs.writeFile(filename, JSON.stringify(data, null, 2), "utf8");
+async function writeJSON(data) {
+    await fs.writeFile(dataFilePath, JSON.stringify(data, null, 2), "utf8");
 }
 
 // Fetch a specific feedback post by ID
 async function getFeedbackById(req, res) {
     try {
-        const { id } = req.params;
-        const allPosts = await readJSON(dataFilePath);
-        const feedback = allPosts.find((post) => post.id === id);
-
+        const feedbackData = await readJSON();
+        const feedback = feedbackData.find((f) => f.id === req.params.id);
         if (!feedback) {
             return res.status(404).json({ message: "Feedback not found." });
         }
-
         res.status(200).json(feedback);
     } catch (error) {
-        console.error("Error fetching feedback:", error);
-        res.status(500).json({ message: "Error fetching feedback." });
+        console.error("Error fetching feedback by ID:", error);
+        res.status(500).json({ message: "Error fetching feedback by ID." });
     }
 }
 
@@ -43,84 +39,17 @@ async function getFeedbackById(req, res) {
 async function updateFeedback(req, res) {
     try {
         const { id } = req.params;
-        const {
-            restaurantName,
-            location,
-            visitDate,
-            rating,
-            content,
-            imageUrl,
-        } = req.body;
-
-        // Validation: Ensure all required fields are present
-        if (
-            !restaurantName ||
-            !location ||
-            !visitDate ||
-            !rating ||
-            !content ||
-            !imageUrl
-        ) {
-            return res
-                .status(400)
-                .json({ message: "All fields are required." });
-        }
-
-        // Validation: No special characters in restaurantName or location
-        const specialCharPattern = /[!@#$%^&*(),.?":{}|<>]/g;
-        if (specialCharPattern.test(restaurantName)) {
-            return res.status(400).json({
-                message:
-                    "Please fill a proper name of the restaurant. Special characters cannot be included in the name of the restaurant.",
-            });
-        }
-        if (specialCharPattern.test(location)) {
-            return res.status(400).json({
-                message:
-                    "Please fill a proper location. Special characters cannot be included in the location.",
-            });
-        }
-
-        // Validation: Ensure content is at least 5 words long
-        const wordCount = content.split(" ").filter(Boolean).length;
-        if (wordCount < 5) {
-            return res
-                .status(400)
-                .json({ message: "Feedback must be at least 5 words long." });
-        }
-
-        // Validation: Ensure imageUrl is valid
-        const imageUrlPattern = /\.(jpg|jpeg|png|gif)$/i; // Valid image extensions
-        if (!imageUrlPattern.test(imageUrl)) {
-            return res.status(400).json({
-                message:
-                    "Invalid image URL format. Must end with .jpg, .jpeg, .png, or .gif.",
-            });
-        }
-
-        const allPosts = await readJSON(dataFilePath);
-        const postIndex = allPosts.findIndex((post) => post.id === id);
-
-        if (postIndex === -1) {
+        const feedbackData = await readJSON();
+        const index = feedbackData.findIndex((f) => f.id === id);
+        if (index === -1) {
             return res.status(404).json({ message: "Feedback not found." });
         }
-
-        allPosts[postIndex] = {
-            ...allPosts[postIndex],
-            restaurantName,
-            location,
-            visitDate,
-            rating,
-            content,
-            imageUrl,
-        };
-        await writeJSON(allPosts, dataFilePath);
-        return res
-            .status(200)
-            .json({ message: "Feedback modified successfully!" });
+        feedbackData[index] = { ...feedbackData[index], ...req.body };
+        await writeJSON(feedbackData);
+        res.status(200).json({ message: "Feedback updated successfully!" });
     } catch (error) {
         console.error("Error updating feedback:", error);
-        return res.status(500).json({ message: "Error updating feedback." });
+        res.status(500).json({ message: "Error updating feedback." });
     }
 }
 
@@ -128,28 +57,22 @@ async function updateFeedback(req, res) {
 async function deleteFeedback(req, res) {
     try {
         const { id } = req.params;
-        const allPosts = await readJSON(dataFilePath);
-        const filteredPosts = allPosts.filter((post) => post.id !== id);
-
-        if (allPosts.length === filteredPosts.length) {
+        const feedbackData = await readJSON();
+        const newFeedbackData = feedbackData.filter((f) => f.id !== id);
+        if (feedbackData.length === newFeedbackData.length) {
             return res.status(404).json({ message: "Feedback not found." });
         }
-
-        await writeJSON(filteredPosts, dataFilePath);
-        return res
-            .status(200)
-            .json({ message: "Feedback deleted successfully!" });
+        await writeJSON(newFeedbackData);
+        res.status(200).json({ message: "Feedback deleted successfully!" });
     } catch (error) {
         console.error("Error deleting feedback:", error);
-        return res.status(500).json({ message: "Error deleting feedback." });
+        res.status(500).json({ message: "Error deleting feedback." });
     }
 }
 
 module.exports = {
+    getFeedbackById,
     updateFeedback,
     deleteFeedback,
-    getFeedbackById,
     ensureFileExists,
-    readJSON, // Ensure readJSON is exported
-    writeJSON, // Ensure writeJSON is exported
 };

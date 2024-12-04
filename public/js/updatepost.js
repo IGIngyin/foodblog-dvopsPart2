@@ -57,7 +57,7 @@ function updateFeedback() {
         return;
     }
 
-    // validate no special characters in restaurant name and location
+    // Validate no special characters in restaurant name and location
     const specialCharPattern = /[!@#$%^&*(),.?":{}|<>]/g; // Detect special characters
     if (specialCharPattern.test(restaurantName)) {
         alert(
@@ -72,7 +72,7 @@ function updateFeedback() {
         return;
     }
 
-    //validate feedback length
+    // Validate feedback length
     if (content.split(" ").filter(Boolean).length < 5) {
         alert("Feedback must be at least 5 words long.");
         return;
@@ -95,16 +95,24 @@ function updateFeedback() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(feedbackData),
     })
-        .then((response) => response.json())
-        .then((data) => {
-            if (data.message === "Feedback modified successfully!") {
+        .then((response) => {
+            if (response.ok) {
                 alert("Feedback updated successfully!");
                 window.location.href = "index.html";
             } else {
-                alert("Failed to update feedback!");
+                return response.json().then((data) => {
+                    const errorMessage =
+                        data.message || "Failed to update feedback!";
+                    alert(errorMessage);
+                });
             }
         })
-        .catch((error) => console.error("Error updating feedback:", error));
+        .catch((error) => {
+            console.error("Error updating feedback:", error);
+            alert(
+                error.message || "An error occurred while updating feedback."
+            );
+        });
 }
 
 // Cancel function to return to the main page without saving changes
