@@ -1,18 +1,22 @@
 {
-  "name": "foodblog-dvops",
-  "version": "1.0.0",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
-  "dependencies": {
-    "body-parser": "^1.20.3",
-    "express": "^4.21.1",
-    "fs": "^0.0.1-security",
-    "uuid": "^11.0.2"
-  }
+    "name": "foodblog-dvops",
+    "version": "1.0.0",
+    "main": "index.js",
+    "scripts": {
+        "backend-test": "nyc --nycrc-path .nycrc-backend mocha"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "description": "",
+    "dependencies": {
+        "body-parser": "^1.20.3",
+        "chai": "^4.3.4",
+        "chai-http": "^4.3.0",
+        "express": "^4.21.1",
+        "fs": "^0.0.1-security",
+        "mocha": "^11.0.1",
+        "nyc": "^17.1.0",
+        "uuid": "^11.0.2"
+    }
 }
