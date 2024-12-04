@@ -1,0 +1,33 @@
+name: Automatic Testing for Foodicted Web App
+
+on: 
+  push: 
+    branches: 
+      - main # Trigger workflow on push to main branch
+
+jobs: 
+  test: 
+    runs-on: ubuntu-latest
+
+    steps: 
+      # Step 1: Checkout code from GitHub Repo
+      - name: Checkout code from GitHub Repo
+        uses: actions/checkout@v3
+
+      # Step 2: Setup Node.js environment
+      - name: Setup Node.js in Ubuntu
+        uses: actions/setup-node@v3
+        with: 
+          node-version: 18
+
+      # Step 3: Remove existing node_modules folder
+      - name: Remove existing node_modules folder
+        run: rm -rf node_modules/
+
+      # Step 4: Install dependencies
+      - name: Install dependencies
+        run: npm install
+
+      # Step 5: Run tests
+      - name: Run backend tests
+        run: npm run backend-test
