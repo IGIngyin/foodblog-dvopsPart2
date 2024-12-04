@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Update Feedback</title>
+        <link
+            href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+            rel="stylesheet"
+        />
+    </head>
+    <body>
+        <div class="container mt-5">
+            <h2>Update Feedback</h2>
+            <form id="updateForm">
+                <div class="form-group">
+                    <label for="restaurantName">Restaurant Name</label>
+                    <input
+                        type="text"
+                        id="restaurantName"
+                        class="form-control"
+                        required
+                    />
+                </div>
+                <div class="form-group">
+                    <label for="location">Location</label>
+                    <input
+                        type="text"
+                        id="location"
+                        class="form-control"
+                        required
+                    />
+                </div>
+                <div class="form-group">
+                    <label for="visitDate">Visit Date</label>
+                    <input
+                        type="date"
+                        id="visitDate"
+                        class="form-control"
+                        required
+                    />
+                </div>
+                <div class="form-group">
+                    <label for="rating">Rating</label>
+                    <input
+                        type="number"
+                        id="rating"
+                        class="form-control"
+                        min="1"
+                        max="5"
+                        required
+                    />
+                </div>
+                <div class="form-group">
+                    <label for="content">Feedback</label>
+                    <textarea
+                        id="content"
+                        class="form-control"
+                        required
+                    ></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="imageFile">Image URL</label>
+                    <input type="url" id="imageFile" class="form-control" />
+                </div>
+                <button
+                    type="button"
+                    class="btn btn-primary"
+                    onclick="updateFeedback()"
+                >
+                    Save Changes
+                </button>
+                <button
+                    type="button"
+                    class="btn btn-warning me-2"
+                    onclick="cancelPost()"
+                >
+                    Cancel
+                </button>
+            </form>
+        </div>
+
+        <script src="js/updatepost.js"></script>
+    </body>
+</html>
