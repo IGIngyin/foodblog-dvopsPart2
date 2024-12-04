@@ -1,45 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Post Details</title>
-        <link rel="stylesheet" href="css/styles.css" />
-        <script src="js/commentDisplay.js" defer></script>
-    </head>
-    <body>
-        <div class="container mt-5">
-            <div class="detail-container">
-                <img
-                    id="post-image"
-                    class="detail-image"
-                    alt="Post Image"
-                    style="width: 100%; height: auto"
-                />
-                <h2 id="post-title" class="detail-title mt-4"></h2>
-                <div id="post-location" class="text-muted"></div>
-                <p id="post-content" class="detail-content mt-3"></p>
-            </div>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Post Details</title>
+    <link rel="stylesheet" href="css/styles.css" />
+    <script src="js/commentDisplay.js" defer></script>
+</head>
+<body>
 
-            <!-- Comment Section -->
-            <div class="comment-section mt-5">
-                <h4>Comments</h4>
-                <div id="comments-container" class="mt-3"></div>
-                <!-- Display comments here -->
+    <button
+    class="btn btn-secondary back-button"
+    onclick="window.location.href='index.html'"
+>
+    Back to Home
+</button>
 
-                <!-- Add Comment Form -->
-                <div class="add-comment mt-4">
-                    <textarea
-                        id="comment-input"
-                        class="form-control"
-                        rows="3"
-                        placeholder="Add a comment..."
-                    ></textarea>
-                    <button id="add-comment-btn" class="btn btn-primary mt-2">
-                        Comment
-                    </button>
-                </div>
+    <div class="container mt-5">
+        <!-- Spinner for loading -->
+        <div id="loading-spinner" style="display: none;">Loading...</div>
+
+        <div class="detail-container">
+            <img
+                id="post-image"
+                class="detail-image"
+                alt="Post Image"
+                style="width: 100%; height: auto"
+            />
+            <h2 id="post-title" class="detail-title mt-4"></h2>
+            <div id="post-location" class="text-muted"></div>
+            <p id="post-content" class="detail-content mt-3"></p>
+        </div>
+
+    
+
+        <!-- Comment Section -->
+        <div class="comment-section mt-5">
+            <h4>Comments</h4>
+            <div id="comments-container" class="mt-3"></div>
+            <!-- Display comments here -->
+
+            <!-- Add Comment Form -->
+            <div class="add-comment mt-4">
+                <textarea
+                    id="comment-input"
+                    class="form-control"
+                    rows="3"
+                    placeholder="Add a comment..."
+                ></textarea>
+                <button id="add-comment-btn" class="btn btn-primary mt-2">
+                    Comment
+                </button>
             </div>
         </div>
-    </body>
+    </div>
+</body>
 </html>
