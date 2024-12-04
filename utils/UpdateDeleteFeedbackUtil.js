@@ -46,7 +46,7 @@ async function updateFeedback(req, res) {
         }
         feedbackData[index] = { ...feedbackData[index], ...req.body };
         await writeJSON(feedbackData);
-        res.status(200).json({ message: "Feedback updated successfully!" });
+        res.status(201).json({ message: "Feedback updated successfully!" });
     } catch (error) {
         console.error("Error updating feedback:", error);
         res.status(500).json({ message: "Error updating feedback." });
