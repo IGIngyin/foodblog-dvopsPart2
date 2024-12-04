@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Food Blog - Restaurant & Food Feedback</title>
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <link
+            href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+            rel="stylesheet"
+        />
+        <link rel="stylesheet" href="css/styles.css" />
+    </head>
+    <body>
+        <!-- Fixed POST Button -->
+        <a href="addpost.html" class="btn fixed-post-button">POST</a>
+
+        <div class="container mt-5">
+            <!-- Message Display Area -->
+            <div id="message" class="text-center mt-3"></div>
+
+            <!-- Logo -->
+            <div class="row justify-content-center">
+                <img
+                    src="images/logo.jpg"
+                    alt="Logo"
+                    class="img-fluid logo-image"
+                />
+            </div>
+
+            <!-- Feedback Grid -->
+            <div class="row mt-4" id="blog-posts-container"></div>
+        </div>
+
+        <!-- Modal for Viewing Feedback Details -->
+        <div
+            class="modal fade"
+            id="viewBlogPostModal"
+            tabindex="-1"
+            role="dialog"
+            aria-labelledby="viewBlogPostModalLabel"
+            aria-hidden="true"
+        >
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="viewBlogPostModalLabel">
+                            Feedback Details
+                        </h5>
+                        <button
+                            type="button"
+                            class="close"
+                            data-dismiss="modal"
+                            aria-label="Close"
+                        >
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <img
+                            id="viewImageUrl"
+                            class="img-fluid mb-3"
+                            alt="Feedback Image"
+                        />
+                        <h5 id="viewRestaurantName"></h5>
+                        <p id="viewContent"></p>
+                        <small class="text-muted">
+                            <div class="info-line">
+                                Location: <span id="viewLocation"></span>
+                            </div>
+                            <div class="info-line">
+                                Date: <span id="viewVisitDate"></span>
+                            </div>
+                            <div class="info-line">
+                                Rating: <span id="viewRating"></span> Stars
+                            </div>
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="js/foodblog.js"></script>
+        <script src="js/updatepost.js"></script>
+    </body>
+</html>
