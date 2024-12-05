@@ -21,11 +21,11 @@ const { addFeedback, getFeedback } = require("./utils/FoodblogUtil");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, "./instrumented")));
+app.use(express.static(path.join(__dirname, "instrumented")));
 
 // Serve the main HTML file
 app.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, "./instrumented", "index.html"));
+    res.sendFile(path.join(__dirname, "instrumented", "index.html"));
 });
 
 // Feedback-related routes
