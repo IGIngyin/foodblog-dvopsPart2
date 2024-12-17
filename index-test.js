@@ -7,7 +7,7 @@ const PORT = 5000;
 const {
     updateFeedback,
     deleteFeedback,
-    getFeedbackById,
+    // getFeedbackById,
     ensureFileExists,
 } = require("./utils/UpdateDeleteFeedbackUtil");
 

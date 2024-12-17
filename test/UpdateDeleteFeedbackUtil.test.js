@@ -147,6 +147,27 @@ describe("UpdateDeleteFeedbackUtil Tests - Including Validation and Error Handli
                 });
         });
 
+        it("should return error for special characters in location", (done) => {
+            chai.request(baseUrl)
+                .put(`/edit-feedback/${dynamicId}`)
+                .send({
+                    restaurantName: "Valid Name",
+                    location: "Valid@$Location", // Invalid characters
+                    visitDate: "2024-12-01",
+                    rating: 4,
+                    content: "This is a valid feedback.",
+                    imageUrl: "https://example.com/image.jpg",
+                })
+                .end((err, res) => {
+                    expect(res.status).to.equal(500);
+                    expect(res.body).to.have.property(
+                        "message",
+                        "Location name cannot contain special characters."
+                    );
+                    done();
+                });
+        });
+
         it("should return error for feedback content less than 5 words", (done) => {
             chai.request(baseUrl)
                 .put(`/edit-feedback/${dynamicId}`)

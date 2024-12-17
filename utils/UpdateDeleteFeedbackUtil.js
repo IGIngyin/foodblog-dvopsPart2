@@ -69,19 +69,19 @@ function validateFeedback(data) {
 }
 
 // Fetch a specific feedback post by ID
-async function getFeedbackById(req, res) {
-    try {
-        const feedbackData = await readJSON();
-        const feedback = feedbackData.find((f) => f.id === req.params.id);
-        if (!feedback) {
-            return res.status(404).json({ message: "Feedback not found." });
-        }
-        res.status(200).json(feedback);
-    } catch (error) {
-        console.error("Error fetching feedback by ID:", error);
-        res.status(500).json({ message: "Error fetching feedback by ID." });
-    }
-}
+// async function getFeedbackById(req, res) {
+//     try {
+//         const feedbackData = await readJSON();
+//         const feedback = feedbackData.find((f) => f.id === req.params.id);
+//         if (!feedback) {
+//             return res.status(404).json({ message: "Feedback not found." });
+//         }
+//         res.status(200).json(feedback);
+//     } catch (error) {
+//         console.error("Error fetching feedback by ID:", error);
+//         res.status(500).json({ message: "Error fetching feedback by ID." });
+//     }
+// }
 
 // Update feedback by ID
 async function updateFeedback(req, res) {
@@ -126,7 +126,7 @@ async function deleteFeedback(req, res) {
 }
 
 module.exports = {
-    getFeedbackById,
+    // getFeedbackById,
     updateFeedback,
     deleteFeedback,
     ensureFileExists,

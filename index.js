@@ -31,7 +31,7 @@ app.get("/", (req, res) => {
 // Feedback-related routes
 app.get("/get-feedback", getFeedback);
 app.post("/add-blogpost", addFeedback);
-app.get("/get-feedback/:id", getFeedbackById);
+// app.get("/get-feedback/:id", getFeedbackById);
 app.put("/edit-feedback/:id", updateFeedback);
 app.delete("/delete-feedback/:id", deleteFeedback);
 
