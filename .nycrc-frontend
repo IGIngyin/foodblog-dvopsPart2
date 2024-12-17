@@ -4,7 +4,7 @@
 "html" 
 ], 
 "include": [ 
-" public/js/commentDisplay.js" 
+" public/js/commentDisplay.js"
 ], 
 "reportDir": "coverage/frontend", 
 "check-coverage": true, 

@@ -43,7 +43,9 @@ describe("UserComments API", () => {
                 .send({ text: "This is a valid comment." })
                 .end((err, res) => {
                     expect(res).to.have.status(201);
-                    expect(res.body.message).to.equal("Comment added successfully.");
+                    expect(res.body).to.be.an("object");
+                    expect(res.body).to.have.property("message").that.includes("successfully");
+                    expect(res.body.comment).to.be.an("object").that.has.all.keys("id", "text", "timestamp");
                     done();
                 });
         });
@@ -54,23 +56,21 @@ describe("UserComments API", () => {
                 .send({ text: "This is a valid comment." })
                 .end((err, res) => {
                     expect(res).to.have.status(400);
-                    expect(res.body.message).to.equal("Invalid post ID format.");
+                    expect(res.body).to.have.property("message").that.equals("Invalid post ID format.");
                     done();
                 });
         });
-        
 
         it("should return 400 for inappropriate language", (done) => {
             chai.request(baseUrl)
                 .post(`/add-comment/${validPostIds[0]}`)
-                .send({ text: "This comment contains asshole." })
+                .send({ text: "This comment contains a banned word: asshole." })
                 .end((err, res) => {
                     expect(res).to.have.status(400);
-                    expect(res.body.message).to.equal("Your comment contains inappropriate language.");
+                    expect(res.body).to.have.property("message").that.equals("Your comment contains inappropriate language.");
                     done();
                 });
         });
-        
 
         it("should return 400 for empty comment", (done) => {
             chai.request(baseUrl)
@@ -78,7 +78,7 @@ describe("UserComments API", () => {
                 .send({ text: "" })
                 .end((err, res) => {
                     expect(res).to.have.status(400);
-                    expect(res.body.message).to.equal("Comment cannot be empty.");
+                    expect(res.body).to.have.property("message").that.equals("Comment cannot be empty.");
                     done();
                 });
         });
@@ -89,7 +89,7 @@ describe("UserComments API", () => {
                 .send({ text: "Valid comment text" })
                 .end((err, res) => {
                     expect(res).to.have.status(404);
-                    expect(res.body.message).to.equal("Post ID does not exist.");
+                    expect(res.body).to.have.property("message").that.equals("Post ID does not exist.");
                     done();
                 });
         });
@@ -101,7 +101,7 @@ describe("UserComments API", () => {
                 .send({ text: longComment })
                 .end((err, res) => {
                     expect(res).to.have.status(400);
-                    expect(res.body.message).to.include("exceeds maximum allowed length");
+                    expect(res.body).to.have.property("message").that.includes("exceeds maximum allowed length");
                     done();
                 });
         });
@@ -114,9 +114,12 @@ describe("UserComments API", () => {
                 .end((err, res) => {
                     expect(res).to.have.status(200);
                     expect(res.body).to.be.an("array");
-                    expect(res.body[0]).to.have.property("id");
-                    expect(res.body[0]).to.have.property("text");
-                    expect(res.body[0]).to.have.property("timestamp");
+                    res.body.forEach((comment) => {
+                        expect(comment).to.have.property("id").that.is.a("string");
+                        expect(comment).to.have.property("text").that.is.a("string");
+                        expect(comment).to.have.property("timestamp").that.is.a("string");
+                        expect(new Date(comment.timestamp).toISOString()).to.equal(comment.timestamp); // Validates ISO timestamp
+                    });
                     done();
                 });
         });
@@ -126,7 +129,7 @@ describe("UserComments API", () => {
                 .get(`/get-comments/${validPostIds[1]}`)
                 .end((err, res) => {
                     expect(res).to.have.status(404);
-                    expect(res.body.message).to.equal("No comments found for this post.");
+                    expect(res.body).to.have.property("message").that.equals("No comments found for this post.");
                     done();
                 });
         });
@@ -139,9 +142,7 @@ describe("UserComments API", () => {
                 .end((err, res) => {
                     expect(res).to.have.status(200);
                     expect(res.body).to.be.an("object");
-                    expect(res.body).to.have.property("restaurantName");
-                    expect(res.body).to.have.property("location");
-                    expect(res.body).to.have.property("rating");
+                    expect(res.body).to.include.keys("restaurantName", "location", "rating");
                     done();
                 });
         });
@@ -151,7 +152,7 @@ describe("UserComments API", () => {
                 .get(`/get-post/${invalidPostId}`)
                 .end((err, res) => {
                     expect(res).to.have.status(404);
-                    expect(res.body.message).to.equal("Post not found.");
+                    expect(res.body).to.have.property("message").that.equals("Post not found.");
                     done();
                 });
         });
@@ -160,9 +161,9 @@ describe("UserComments API", () => {
     describe("Error Scenarios", () => {
         it("should return 500 if reading the comments file fails", async () => {
             const backup = fs.readFileSync(commentsFilePath);
-            fs.unlinkSync(commentsFilePath); // Remove the file
+            fs.unlinkSync(commentsFilePath); // Simulate missing file
             const res = await chai.request(baseUrl).get(`/get-comments/${validPostIds[0]}`);
-            expect(res).to.have.status(404); // Comments not found
+            expect(res).to.have.status(500); // Expect 500 status code
             fs.writeFileSync(commentsFilePath, backup); // Restore the file
         });
 
@@ -170,7 +171,7 @@ describe("UserComments API", () => {
             const backup = fs.readFileSync(commentsFilePath);
             fs.writeFileSync(commentsFilePath, "{ invalidJson: true }"); // Corrupt the file
             const res = await chai.request(baseUrl).get(`/get-comments/${validPostIds[0]}`);
-            expect(res).to.have.status(500);
+            expect(res).to.have.status(500); // Expect 500 for invalid JSON
             fs.writeFileSync(commentsFilePath, backup); // Restore the file
         });
     });

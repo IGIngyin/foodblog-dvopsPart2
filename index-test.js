@@ -1,7 +1,8 @@
 const express = require("express");
 const path = require("path");
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 5050;
+
 
 // Import route handlers
 const {
@@ -21,11 +22,12 @@ const {
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, "./instrumented")));
+app.use(express.static("./instrumented"));
+
 
 // Serve the main HTML file
 app.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, "./instrumented/", "index.html"));
+    res.sendFile(__dirname, "/instrumented/", "index.html");
 });
 
 // Feedback-related routes
