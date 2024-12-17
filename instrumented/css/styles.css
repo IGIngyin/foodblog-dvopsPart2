@@ -1,0 +1,203 @@
+.card {
+    height: 350px;
+    overflow: hidden;
+}
+
+.card-img-top {
+    height: 150px;
+    object-fit: cover;
+}
+
+.card-text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.modal-body {
+    max-height: 400px;
+    overflow-y: auto;
+}
+.custom-yellow {
+    background-color: #ffc107; /* Customize the yellow shade */
+    color: #000; /* Text color */
+    border-color: #ffc107;
+}
+
+.custom-yellow:hover {
+    background-color: #e0a800; /* A little bit dark when on hover */
+    border-color: #e0a800;
+}
+.form-control-textarea,
+#content {
+    height: 100px;
+}
+/* Center the form in the middle of the page */
+.center-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+.form-container {
+    width: 100%;
+    max-width: 500px;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+.rating-group {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 10px;
+}
+.rating-group label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 14px;
+    color: gray;
+    cursor: pointer;
+}
+.rating-group input[type="radio"] {
+    display: none;
+}
+.rating-group label span {
+    width: 24px;
+    height: 24px;
+    background-color: gray;
+    border-radius: 50%;
+    display: inline-block;
+    margin-top: 5px;
+}
+.rating-group input[type="radio"]:checked + label span {
+    background-color: gold; /* Fill the circle with solid yellow when selected */
+}
+.button-group button {
+    margin-left: 10px;
+}
+.fixed-post-button {
+    position: fixed; /* Makes the button fixed on the screen */
+    top: 40px; /* Position it from the top */
+    right: 60px; /* Position it from the right */
+    z-index: 1000; /* Ensures it stays above other content */
+    padding: 10px 20px;
+    background-color: #ffc107;
+    color: #000;
+    border: none;
+    border-radius: 4px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+.fixed-post-button:hover {
+    background-color: #e0a800; /* Changes color on hover */
+}
+.logo-image {
+    margin-top: -30px; /* Adjust the negative margin as needed to move the logo up */
+}
+.info-line {
+    display: block;
+    margin-bottom: 5px; /* Adjust spacing as needed */
+}
+/* Container styling for the detailed post view */
+.detail-container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Image styling for the post detail view */
+.detail-image {
+    width: 100%;
+    max-height: 400px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+/* Title styling */
+.detail-title {
+    font-size: 28px;
+    font-weight: bold;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+/* Location and content styling */
+.text-muted {
+    color: #6c757d;
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+.detail-content {
+    font-size: 18px;
+    margin-top: 15px;
+    line-height: 1.6;
+}
+
+/* Comment section styling */
+.comment-section {
+    margin-top: 30px;
+}
+
+.comment-section h4 {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.comment {
+    padding: 15px;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    background-color: #f9f9f9;
+}
+
+.comment-author {
+    font-weight: bold;
+    color: #333;
+}
+
+.comment-text {
+    font-size: 16px;
+    margin-top: 5px;
+    color: #555;
+}
+
+.add-comment {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+}
+
+#comment-input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ced4da;
+    resize: vertical;
+    font-size: 16px;
+}
+
+#add-comment-btn {
+    margin-top: 10px;
+    align-self: flex-end;
+    padding: 8px 16px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#add-comment-btn:hover {
+    background-color: #0056b3;
+}

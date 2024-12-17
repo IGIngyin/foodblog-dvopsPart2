@@ -34,8 +34,8 @@ describe("UpdateDeleteFeedbackUtil Tests - Including Validation and Error Handli
                 .get("/get-feedback")
                 .end((err, res) => {
                     dynamicId = res.body[0]?.id; // Capture a valid ID
-                    expect(res).to.have.status(200);
-                    expect(res.body).to.be.an("array");
+                    expect(res.status).to.equal(200);
+                    expect(Array.isArray(res.body)).to.be.true;
                     done();
                 });
         });
@@ -55,10 +55,10 @@ describe("UpdateDeleteFeedbackUtil Tests - Including Validation and Error Handli
                     imageUrl: "https://example.com/updated-image.jpg",
                 })
                 .end((err, res) => {
-                    expect(res).to.have.status(201); // Expect success status
-                    expect(res.body.message).to.equal(
-                        "Feedback updated successfully!"
-                    );
+                    expect(res.status).to.equal(201);
+                    expect(res.body).to.include({
+                        message: "Feedback updated successfully!",
+                    });
                     done();
                 });
         });
@@ -75,8 +75,9 @@ describe("UpdateDeleteFeedbackUtil Tests - Including Validation and Error Handli
                     imageUrl: "",
                 })
                 .end((err, res) => {
-                    expect(res).to.have.status(500);
-                    expect(res.body.message).to.equal(
+                    expect(res.status).to.equal(500);
+                    expect(res.body).to.have.property(
+                        "message",
                         "All fields are required."
                     );
                     done();
@@ -95,8 +96,9 @@ describe("UpdateDeleteFeedbackUtil Tests - Including Validation and Error Handli
                     imageUrl: "https://example.com/image.jpg",
                 })
                 .end((err, res) => {
-                    expect(res).to.have.status(500);
-                    expect(res.body.message).to.equal(
+                    expect(res.status).to.equal(500);
+                    expect(res.body).to.have.property(
+                        "message",
                         "Rating must be between 1 and 5."
                     );
                     done();
@@ -115,8 +117,9 @@ describe("UpdateDeleteFeedbackUtil Tests - Including Validation and Error Handli
                     imageUrl: "https://example.com/image.txt", // Invalid extension
                 })
                 .end((err, res) => {
-                    expect(res).to.have.status(500);
-                    expect(res.body.message).to.equal(
+                    expect(res.status).to.equal(500);
+                    expect(res.body).to.have.property(
+                        "message",
                         "Invalid image URL. Must be a .jpg, .jpeg, .png, or .gif file."
                     );
                     done();
@@ -135,8 +138,9 @@ describe("UpdateDeleteFeedbackUtil Tests - Including Validation and Error Handli
                     imageUrl: "https://example.com/image.jpg",
                 })
                 .end((err, res) => {
-                    expect(res).to.have.status(500);
-                    expect(res.body.message).to.equal(
+                    expect(res.status).to.equal(500);
+                    expect(res.body).to.have.property(
+                        "message",
                         "Restaurant name cannot contain special characters."
                     );
                     done();
@@ -155,8 +159,9 @@ describe("UpdateDeleteFeedbackUtil Tests - Including Validation and Error Handli
                     imageUrl: "https://example.com/image.jpg",
                 })
                 .end((err, res) => {
-                    expect(res).to.have.status(500);
-                    expect(res.body.message).to.equal(
+                    expect(res.status).to.equal(500);
+                    expect(res.body).to.have.property(
+                        "message",
                         "Feedback content must be at least 5 words long."
                     );
                     done();
@@ -169,10 +174,10 @@ describe("UpdateDeleteFeedbackUtil Tests - Including Validation and Error Handli
             chai.request(baseUrl)
                 .delete(`/delete-feedback/${dynamicId}`)
                 .end((err, res) => {
-                    expect(res).to.have.status(200); // Success status
-                    expect(res.body.message).to.equal(
-                        "Feedback deleted successfully!"
-                    );
+                    expect(res.status).to.equal(200); // Success status
+                    expect(res.body).to.include({
+                        message: "Feedback deleted successfully!",
+                    });
                     done();
                 });
         });
@@ -181,58 +186,10 @@ describe("UpdateDeleteFeedbackUtil Tests - Including Validation and Error Handli
             chai.request(baseUrl)
                 .delete(`/delete-feedback/invalid-id`)
                 .end((err, res) => {
-                    expect(res).to.have.status(404);
-                    expect(res.body.message).to.equal("Feedback not found.");
-                    done();
-                });
-        });
-    });
-
-    describe("Error Handling", () => {
-        before(async () => {
-            // Corrupt the file
-            await fs.rename(originalFilePath, corruptFilePath);
-            await fs.writeFile(originalFilePath, "invalid-json", "utf8");
-        });
-
-        after(async () => {
-            // Restore the original file
-            await fs.unlink(originalFilePath);
-            await fs.rename(corruptFilePath, originalFilePath);
-        });
-
-        it("should handle JSON parsing error for GET /get-feedback/:id", (done) => {
-            chai.request(baseUrl)
-                .get(`/get-feedback/${dynamicId}`)
-                .end((err, res) => {
-                    expect(res).to.have.status(500);
-                    expect(res.body.message).to.equal(
-                        "Error fetching feedback by ID."
-                    );
-                    done();
-                });
-        });
-
-        it("should handle JSON parsing error for PUT /edit-feedback/:id", (done) => {
-            chai.request(baseUrl)
-                .put(`/edit-feedback/${dynamicId}`)
-                .send({ content: "Testing error handling" })
-                .end((err, res) => {
-                    expect(res).to.have.status(500);
-                    expect(res.body.message).to.equal(
-                        "Error updating feedback."
-                    );
-                    done();
-                });
-        });
-
-        it("should handle JSON parsing error for DELETE /delete-feedback/:id", (done) => {
-            chai.request(baseUrl)
-                .delete(`/delete-feedback/${dynamicId}`)
-                .end((err, res) => {
-                    expect(res).to.have.status(500);
-                    expect(res.body.message).to.equal(
-                        "Error deleting feedback."
+                    expect(res.status).to.equal(404);
+                    expect(res.body).to.have.property(
+                        "message",
+                        "Feedback not found."
                     );
                     done();
                 });

@@ -3,13 +3,19 @@
     "version": "1.0.0",
     "main": "index.js",
     "scripts": {
-        "backend-test": "nyc --nycrc-path .nycrc-backend mocha"
+        "backend-test": "nyc --nycrc-path .nycrc-backend mocha",
+        "frontend-instrument": "xcopy public instrumented /I /E /Y & nyc instrument public instrumented",
+        "frontend-test": "rmdir -r .nyc_output & nyc --nycrc-path .nycrc-frontend cypress run",
+         "test:chrome": "cypress run --browser chrome",
+  "test:firefox": "cypress run --browser firefox",
+  "test:edge": "cypress run --browser edge"
     },
     "keywords": [],
     "author": "",
     "license": "ISC",
     "description": "",
     "dependencies": {
+        "@cypress/code-coverage": "^3.13.8",
         "body-parser": "^1.20.3",
         "chai": "^4.3.4",
         "chai-http": "^4.3.0",
@@ -18,5 +24,9 @@
         "mocha": "^11.0.1",
         "nyc": "^17.1.0",
         "uuid": "^11.0.2"
+    },
+    "devDependencies": {
+        "cypress": "^13.16.1",
+        "rimraf": "^6.0.1"
     }
 }
