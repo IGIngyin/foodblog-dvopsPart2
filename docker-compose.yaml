@@ -1,0 +1,9 @@
+services:
+    build-rms:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        image: ingyinkhai304/rms-docker-img:latest
+        container_name: rms-docker-container
+        ports:
+            - "8000:5050"
