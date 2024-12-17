@@ -34,6 +34,7 @@ describe("UpdateDeleteFeedbackUtil Tests - Including Validation and Error Handli
                 .get("/get-feedback")
                 .end((err, res) => {
                     dynamicId = res.body[0]?.id; // Capture a valid ID
+                    console.log("id is: " + dynamicId);
                     expect(res.status).to.equal(200);
                     expect(Array.isArray(res.body)).to.be.true;
                     done();
