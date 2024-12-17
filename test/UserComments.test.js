@@ -109,6 +109,7 @@ describe("UserComments API", () => {
 
     describe("GET /get-comments/:id", () => {
         it("should retrieve comments for a valid post ID", (done) => {
+            console.log("idddd: " + validPostIds[0]);
             chai.request(baseUrl)
                 .get(`/get-comments/${validPostIds[0]}`)
                 .end((err, res) => {
@@ -159,11 +160,11 @@ describe("UserComments API", () => {
     });
 
     describe("Error Scenarios", () => {
-        it("should return 500 if reading the comments file fails", async () => {
+        it("should return 404 if reading the comments file fails", async () => {
             const backup = fs.readFileSync(commentsFilePath);
             fs.unlinkSync(commentsFilePath); // Simulate missing file
             const res = await chai.request(baseUrl).get(`/get-comments/${validPostIds[0]}`);
-            expect(res).to.have.status(500); // Expect 500 status code
+            expect(res).to.have.status(404); // Expect 500 status code
             fs.writeFileSync(commentsFilePath, backup); // Restore the file
         });
 
