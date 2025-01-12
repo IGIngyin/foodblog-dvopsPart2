@@ -1,0 +1,9 @@
+services:
+  build-rms:
+    build:
+      context: .
+      dockerfile: Dockerfile 
+    image: kawkaw36/rms-docker-img:foodblog
+    container_name: rms-docker-container
+    ports:
+      - "8000:5050"
