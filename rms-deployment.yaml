@@ -13,6 +13,9 @@ spec: # defines the desired state of the Deployment.
                 app: rms-docker-img
         spec: # specifies the container(s) to run
             containers:
+                - name: foodblogs
+                  image: ingyinkhai304/fb-docker-img:v1
+
                 - name: rms-container
                   image: ingyinkhai304/rms-docker-img:latest
                   ports:
