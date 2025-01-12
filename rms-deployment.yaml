@@ -14,7 +14,7 @@ spec: # defines the desired state of the Deployment.
         spec: # specifies the container(s) to run
             containers:
                 - name: foodblogs
-                  image: ingyinkhai304/fb-docker-img:v1
+                  image: ingyinkhai304/fb-docker-img:v2
 
                 - name: rms-container
                   image: ingyinkhai304/rms-docker-img:latest
