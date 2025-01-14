@@ -23,6 +23,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
 
+const statusMonitor = require("express-status-monitor");
+app.use(statusMonitor());
 // Serve the main HTML file
 app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "public", "index.html"));
