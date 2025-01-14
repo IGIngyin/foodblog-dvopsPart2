@@ -3,7 +3,7 @@ services:
         build:
             context: .
             dockerfile: Dockerfile
-        image: ingyinkhai304/fb-docker-img:v2
+        image: ingyinkhai304/fb-docker-img:v4
         container_name: fb-docker-container
         ports:
             - "8000:5050"
