@@ -3,6 +3,7 @@ services:
         build:
             context: .
             dockerfile: Dockerfile
+
         image: ingyinkhai304/rms-docker-img:latest1
         container_name: rms-docker-container1
         ports:
