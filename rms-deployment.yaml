@@ -14,7 +14,7 @@ spec: # defines the desired state of the Deployment.
         spec: # specifies the container(s) to run
             containers:
                 - name: rms-container
-                  image: ingyinkhai304/rms-docker-img:latest1
+                  image: ingyinkhai304/rms-docker-img:latest30
                   imagePullPolicy: Always
                   ports:
                       - containerPort: 5000 # specifies the port that the application listens on
