@@ -50,8 +50,8 @@ ensureFileExists()
 // Start the server
 const server = app.listen(PORT, () => {
     console.log(`Demo project at: http://localhost:${PORT}`);
-    logger.info(`Demo project at: http://localhost:${PORT}`);
-    logger.error(`Example or error log`);
+    // logger.info(`Demo project at: http://localhost:${PORT}`);
+    // logger.error(`Example or error log`);
 });
 
 module.exports = { app, server };
