@@ -1,7 +1,7 @@
 const express = require("express");
 const path = require("path");
 const app = express();
-const PORT = 5050;
+const PORT = 5000;
 
 // Import route handlers
 const {
@@ -50,6 +50,8 @@ ensureFileExists()
 // Start the server
 const server = app.listen(PORT, () => {
     console.log(`Demo project at: http://localhost:${PORT}`);
+    logger.info(`Demo project at: http://localhost:${PORT}`);
+    logger.error(`Example or error log`);
 });
 
 module.exports = { app, server };
