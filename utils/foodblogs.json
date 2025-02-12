@@ -1,16 +1,5 @@
 [
   {
-    "restaurantName": "Chili Crab House",
-    "location": "Clarke Quay, Singapore",
-    "visitDate": "2024-11-09",
-    "rating": "5",
-    "content": "The best chili crab in Singapore! The sauce was perfect with a nice spicy kick. Highly recommend pairing it with mantou buns.",
-    "imageUrl": "https://i.pinimg.com/474x/81/28/82/812882a84064a556e0fbfdecf7d4ac41.jpg",
-    "title": "Chili Crab House - 5 Stars",
-    "datePublished": "2024-11-09T18:15:00Z",
-    "id": "1731077350668713"
-  },
-  {
     "restaurantName": "Botanic Bistro",
     "location": "Singapore Botanic Gardens",
     "visitDate": "2024-11-11",

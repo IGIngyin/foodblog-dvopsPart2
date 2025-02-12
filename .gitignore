@@ -2,3 +2,4 @@
 .nyc_output/ 
 # Ignore coverage folder 
 coverage/ 
+node_modules
